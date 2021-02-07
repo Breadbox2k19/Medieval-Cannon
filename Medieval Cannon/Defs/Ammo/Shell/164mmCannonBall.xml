@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+  <!-- ==================== Base ========================== -->
+<Defs>
+
+  <ThingCategoryDef>
+    <defName>Ammo164mmCannonShells</defName>
+    <label>CannonShells</label>
+    <parent>AmmoShells</parent>
+    <iconPath>UI/Icons/ThingCategories/CaliberCannon</iconPath>
+  </ThingCategoryDef>
+
+  <CombatExtended.AmmoSetDef>
+    <defName>AmmoSet_164mmCannonBall</defName>
+    <label>130mm Cannonball</label>
+    <ammoTypes>
+      <Ammo_164mmCannonShell_Grape>Bullet_164mmCannonShell_Grape</Ammo_164mmCannonShell_Grape>
+      <Ammo_164mmCannonShell_HE>Bullet_164mmCannonShell_HE</Ammo_164mmCannonShell_HE>
+	  <Ammo_164mmCannonShell_AP>Bullet_164mmCannonShell_AP</Ammo_164mmCannonShell_AP>
+	  <Ammo_164mmCannonShell_FI>Bullet_164mmCannonShell_FI</Ammo_164mmCannonShell_FI>
+    </ammoTypes>
+  </CombatExtended.AmmoSetDef>
+
+  <ThingDef Class="CombatExtended.AmmoDef" Name="164mmCannonShellBase" ParentName="AmmoBase" Abstract="True">
+    <description>A Round shell designed to be fired from a Cannon.</description>
+    <thingCategories>
+      <li>Ammo164mmCannonShells</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+    <tradeTags>
+      <li>CE_AutoEnableTrade_Sellable</li>
+      <li>CE_AutoEnableCrafting_FueledSmithy</li>
+      <li>CE_AutoEnableCrafting_ElectricSmithy</li>
+    </tradeTags>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>7.9</Mass>
+      <Bulk>12.41</Bulk>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef Class="CombatExtended.AmmoDef" Name="Base164mmCannonShell" ParentName="BaseBullet" Abstract="true">
+    <graphicData>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
+      <speed>120</speed>
+      <soundExplode>MortarBomb_Explode</soundExplode>
+      <flyOverhead>false</flyOverhead>
+      <dropsCasings>False</dropsCasings>
+      <casingMoteDefname>Mote_BigShell</casingMoteDefname>
+    </projectile>
+  </ThingDef>
+
+  <RecipeDef ParentName="AmmoRecipeBase" Name="CannonRoundRecipeBase" Abstract="true">
+		<recipeUsers>
+                                <li>FueledSmithy</li>
+		<li>ElectricSmithy</li>
+		</recipeUsers>
+  </RecipeDef>
+
+
+  <!-- ==================== 高爆 ========================== -->
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="164mmCannonShellBase">
+    <defName>Ammo_164mmCannonShell_HE</defName>
+    <label>explosive cannon round</label>
+    <graphicData>
+      <texPath>Things/Item/CannonBall_Explosive</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>51.83</MarketValue>
+    </statBases>
+    <ammoClass>HE</ammoClass>
+    <detonateProjectile>Bullet_164mmCannonShell_HE</detonateProjectile>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>2.5</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+        <startWickHitPointsPercent>0.7</startWickHitPointsPercent>
+		<applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
+		<explodeOnKilled>True</explodeOnKilled>
+        <wickTicks>30~60</wickTicks>
+      </li>
+    </comps>
+    <cookOffFlashScale>30</cookOffFlashScale>
+    <cookOffSound>MortarBomb_Explode</cookOffSound>
+  </ThingDef>
+
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="Base164mmCannonShell">
+    <defName>Bullet_164mmCannonShell_HE</defName>
+    <label>cannon shell (HE)</label>
+    <thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/Projectile_Explosive</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>250</damageAmountBase>
+      <explosionDelay>60</explosionDelay>
+      <explosionRadius>2.5</explosionRadius>
+      <soundExplode>MortarBomb_Explode</soundExplode>
+      <applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
+    </projectile>
+    <comps>
+      <li Class="CombatExtended.CompProperties_Fragments">
+        <fragments>
+          <Fragment_Large>15</Fragment_Large>
+          <Fragment_Small>75</Fragment_Small>
+        </fragments>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <RecipeDef ParentName="CannonRoundRecipeBase">
+    <defName>MakeAmmo_164mmCannonShell_HE</defName>
+    <label>make HE Cannon shells x5</label>
+    <description>Craft 5 Explosive cannon shells.</description>
+    <jobString>Making explosive cannon shells.</jobString>
+    <workAmount>8000</workAmount>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>80</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>FSX</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Steel</li>
+        <li>FSX</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Ammo_164mmCannonShell_HE>5</Ammo_164mmCannonShell_HE>
+    </products>
+  </RecipeDef>
+
+
+  <!-- ================== 葡萄 ================== -->
+
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="164mmCannonShellBase">
+    <defName>Ammo_164mmCannonShell_Grape</defName>
+    <label>Shrapnel shot</label>
+    <graphicData>
+      <texPath>Things/Item/CannonBall_Grape</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>43.83</MarketValue>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <ammoClass>Shrapnel</ammoClass>
+    <cookOffProjectile>Bullet_164mmCannonShell_Grape</cookOffProjectile>
+    <cookOffFlashScale>30</cookOffFlashScale>
+    <cookOffSound>MortarBomb_Explode</cookOffSound>
+  </ThingDef>
+
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="Base164mmCannonShell">
+    <defName>Bullet_164mmCannonShell_Grape</defName>
+    <label>Shrapnel</label>
+    <graphicData>
+      <texPath>Things/Projectile/Projectile_Grape</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
+      <damageAmountBase>16</damageAmountBase>
+      <pelletCount>28</pelletCount>
+      <armorPenetrationSharp>3</armorPenetrationSharp>
+      <armorPenetrationBlunt>7</armorPenetrationBlunt>
+      <spreadMult>17.8</spreadMult>
+    </projectile>
+  </ThingDef>
+
+  <RecipeDef ParentName="CannonRoundRecipeBase">
+    <defName>MakeAmmo_164mmCannonShell_Grape</defName>
+    <label>make scrape shot x5</label>
+    <description>Craft 5 Scrape shot.</description>
+    <jobString>Making  scrapeshot.</jobString>
+    <workAmount>7000</workAmount>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>80</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>FSX</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Steel</li>
+        <li>FSX</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Ammo_164mmCannonShell_Grape>1</Ammo_164mmCannonShell_Grape>
+    </products>
+  </RecipeDef>
+
+  <!-- ==================实心 ================== -->
+   <ThingDef Class="CombatExtended.AmmoDef" ParentName="164mmCannonShellBase">
+    <defName>Ammo_164mmCannonShell_AP</defName>
+    <label>Solid Cannonball</label>
+    <graphicData>
+      <texPath>Things/Item/CannonBall_Solid</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>34</MarketValue>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <ammoClass>SolidBall</ammoClass>
+  </ThingDef>
+
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="Base164mmCannonShell">
+    <defName>Bullet_164mmCannonShell_AP</defName>
+    <label>cannon solid round</label>
+    <graphicData>
+      <texPath>Things/Projectile/Projectile_Solid</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
+      <damageDef>Blunt</damageDef>
+      <damageAmountBase>350</damageAmountBase>
+      <armorPenetrationBlunt>100</armorPenetrationBlunt>
+      <preExplosionSpawnChance>0.5</preExplosionSpawnChance>
+      <preExplosionSpawnThingDef>Ammo_164mmCannonShell_AP</preExplosionSpawnThingDef>
+    </projectile>
+    <comps>
+	  <li Class="CombatExtended.CompProperties_ExplosiveCE">
+		<damageAmountBase>40</damageAmountBase>
+		<explosiveDamageType>Bomb</explosiveDamageType>
+		<explosiveRadius>0.9</explosiveRadius>
+		<explosionSound>MortarBomb_Explode</explosionSound>
+		<applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
+	  </li>
+	  <li Class="CombatExtended.CompProperties_Fragments">
+		<fragments>
+			<Fragment_Large>2</Fragment_Large>
+		  <Fragment_Small>7</Fragment_Small>
+		</fragments>
+	  </li>
+    </comps>
+  </ThingDef>
+
+  <RecipeDef ParentName="CannonRoundRecipeBase">
+    <defName>MakeAmmo_164mmCannonShell_AP</defName>
+    <label>make Solid cannonball x5</label>
+    <description>Craft 5 Solid Cannonball.</description>
+    <jobString>Making 30-pounder cannon shells.</jobString>
+    <workAmount>3200</workAmount>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>80</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>FSX</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Steel</li>
+        <li>FSX</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Ammo_164mmCannonShell_AP>5</Ammo_164mmCannonShell_AP>
+    </products>
+  </RecipeDef>
+
+  <!-- ==================== 燃燒 ========================== -->
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="164mmCannonShellBase">
+    <defName>Ammo_164mmCannonShell_FI</defName>
+    <label>Incendiary Cannon Shell</label>
+    <graphicData>
+      <texPath>Things/Item/CannonBall_Incendiary</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>36.83</MarketValue>
+    </statBases>
+    <ammoClass>FI</ammoClass>
+    <detonateProjectile>Bullet_164mmCannonShell_FI</detonateProjectile>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>2</explosiveRadius>
+        <explosiveDamageType>PrometheumFlame</explosiveDamageType>
+        <startWickHitPointsPercent>0.7</startWickHitPointsPercent>
+		<applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
+		<explodeOnKilled>True</explodeOnKilled>
+        <wickTicks>30~60</wickTicks>
+      </li>
+    </comps>
+    <cookOffFlashScale>30</cookOffFlashScale>
+    <cookOffSound>MortarBomb_Explode</cookOffSound>
+  </ThingDef>
+
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="Base164mmCannonShell">
+    <defName>Bullet_164mmCannonShell_FI</defName>
+    <label>incendiary shell(Incendiary)</label>
+    <thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/Projectile_Incendiary</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
+      <damageDef>PrometheumFlame</damageDef>
+      <damageAmountBase>0</damageAmountBase>
+      <armorPenetrationSharp>0</armorPenetrationSharp>
+      <armorPenetrationBlunt>0</armorPenetrationBlunt>
+      <explosionRadius>2.5</explosionRadius>
+      <flyOverhead>true</flyOverhead>
+      <preExplosionSpawnThingDef>FilthPrometheum</preExplosionSpawnThingDef>
+      <preExplosionSpawnChance>0.15</preExplosionSpawnChance>
+      <soundExplode>MortarIncendiary_Explode</soundExplode>
+    </projectile>
+    <comps>
+      <li Class="CombatExtended.CompProperties_Fragments">
+        <fragments>
+          <Fragment_Large>1</Fragment_Large>
+          <Fragment_Small>4</Fragment_Small>
+        </fragments>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <RecipeDef ParentName="CannonRoundRecipeBase">
+    <defName>MakeAmmo_164mmCannonShell_FI</defName>
+    <label>make Carcess shells x5</label>
+    <description>Craft 5 carcess shells.</description>
+    <jobString>Making carcess shot.</jobString>
+    <workAmount>8000</workAmount>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>58</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Prometheum</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>FSX</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Steel</li>
+        <li>Prometheum</li>
+        <li>FSX</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Ammo_164mmCannonShell_FI>5</Ammo_164mmCannonShell_FI>
+    </products>
+  </RecipeDef>
+
+
+
+
+</Defs>

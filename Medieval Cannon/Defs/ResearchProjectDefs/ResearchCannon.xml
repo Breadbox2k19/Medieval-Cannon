@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+-<ResearchProjectDef>
+<defName>CannonMaking</defName>
+<label>The Power of Blackpowder</label>
+<description>you know that</description>
+<baseCost>300</baseCost>
+<techLevel>Medieval</techLevel>
+    <prerequisites>
+      <li>Smithing</li>
+    </prerequisites>
+<researchViewX>2</researchViewX>
+<researchViewY>4</researchViewY>
+</ResearchProjectDef>
+
+</Defs>
